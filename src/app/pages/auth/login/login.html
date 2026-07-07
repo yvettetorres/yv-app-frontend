@@ -1,0 +1,37 @@
+<div class="pixel-login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <span class="login-icon">🌙</span>
+      <h2>Task</h2>
+      <p>Bienvenido de vuelta al espacio</p>
+    </div>
+
+    <!-- Enlazamos tu formulario reactivo con [formGroup] y llamamos a onLogin() -->
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      
+      <div class="input-group">
+        <label>Usuario*</label>
+        <!-- Cambiado ngModel por formControlName -->
+        <input 
+          type="text" 
+          placeholder="Tu usuario" 
+          formControlName="username">
+      </div>
+
+      <div class="input-group">
+        <label>Contraseña*</label>
+        <!-- Cambiado ngModel por formControlName -->
+        <input 
+          type="password" 
+          placeholder="••••••••" 
+          formControlName="password">
+      </div>
+
+      <!-- El botón se habilita solo si el formulario es válido -->
+      <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
+        Acceder
+      </button>
+
+    </form>
+  </div>
+</div>
