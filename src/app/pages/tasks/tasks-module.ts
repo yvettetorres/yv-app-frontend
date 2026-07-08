@@ -6,6 +6,7 @@ import { MaterialModule } from '../../material/material-module';
 import { Tasks } from './tasks';
 import { TasksDialog } from './components/tasks-dialog/tasks-dialog';
 
+
 @NgModule({
   declarations: [Tasks, TasksDialog],
   imports: [CommonModule, TasksRoutingModule, ReactiveFormsModule, MaterialModule]

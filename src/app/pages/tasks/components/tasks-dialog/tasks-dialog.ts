@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TasksService } from '../../services/tasks';
-import { TaskResponse } from '../../../../shared/models/task.interface';
 
 enum Action { EDIT = 'edit', NEW = 'new' }
 
@@ -63,19 +62,31 @@ export class TasksDialog implements OnInit {
         this.dialogRef.close(result);
       });
     } else {
+      // ✅ CORREGIDO: NO enviamos el id en el body
       const updateTask = {
-        id: parseInt(formValues.id),
-        projectId: formValues.projectId,
         title: formValues.title,
         description: formValues.description,
         status: formValues.status
       };
-      this.tasksSvc.updateTask(updateTask as any).subscribe((result: any) => {
-        this.dialogRef.close(result);
+      
+      const taskId = parseInt(formValues.id);
+      
+      console.log('📤 Actualizando tarea ID:', taskId);
+      console.log('📦 Datos a enviar (sin id):', updateTask);
+      
+      this.tasksSvc.updateTask(taskId, updateTask).subscribe({
+        next: (result) => {
+          console.log('✅ Tarea actualizada:', result);
+          this.dialogRef.close(result);
+        },
+        error: (error) => {
+          console.error('❌ Error al actualizar:', error);
+        }
       });
     }
   }
 
+  // ✅ El método onClear debe estar DENTRO de la clase
   onClear() {
     this.taskForm.reset();
   }
